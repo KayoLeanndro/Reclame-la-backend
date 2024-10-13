@@ -29,6 +29,9 @@ public class Comentario implements Serializable{
     @Column(name = "cmtr_id")
     private long id;
 
+    @Column(name = "titulo_cmtr", nullable = false, length = 45)
+    private String tituloComentario;
+
     @Column(name = "ctud_comentario", nullable = false, length = 255)
     private String conteudoComentario;
 

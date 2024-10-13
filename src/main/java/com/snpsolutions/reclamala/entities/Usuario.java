@@ -31,8 +31,11 @@ public class Usuario implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "matricula")
+    @Column(name = "matricula", nullable = false, unique = true)
     private Integer matricula;
+
+    @Column(name = "usurcpf", nullable = false, unique = true, length = 11)
+    private String usuarioCpf;
 
     @Column(name = "username", nullable = false, unique = true, length = 100)
     private String username;

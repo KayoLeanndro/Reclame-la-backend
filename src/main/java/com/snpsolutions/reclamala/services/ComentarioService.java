@@ -1,36 +1,77 @@
 package com.snpsolutions.reclamala.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QuerySnapshot;
 import com.snpsolutions.reclamala.entities.Comentario;
-import com.snpsolutions.reclamala.entities.Usuario;
-import com.snpsolutions.reclamala.repositories.ComentarioRepository;
-import com.snpsolutions.reclamala.repositories.UsuarioRepository;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Service
 public class ComentarioService {
-    
-    private final ComentarioRepository comentarioRepository;
-    private final UsuarioRepository usuarioRepository;
 
-    public Comentario salvarComentario(Long usuarioId, Comentario comentario){
-        Usuario usuario = usuarioRepository.findById(usuarioId)
-                          .orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
-        comentario.setUsuarioComentario(usuario);
+    private final Firestore firestore;
 
-        return comentarioRepository.save(comentario);
+    @Autowired
+    public ComentarioService(Firestore firestore) {
+        this.firestore = firestore;
     }
 
-    public List<Comentario> listarComentarios(List<Comentario> listaComentarios){
-        return comentarioRepository.findAll();
+    public CompletableFuture<Comentario> addComentario(Comentario comentario, String usuarioId) {
+        CompletableFuture<Comentario> future = new CompletableFuture<>();
+
+        // Cria uma referência ao documento do usuário
+        DocumentReference usuarioRef = firestore.collection("usuarios").document(usuarioId);
+
+        // Define a referência do usuário no comentário
+        comentario.setUsuarioComentario(usuarioRef);
+
+        // Adiciona o comentário na coleção "comentarios"
+        ApiFuture<DocumentReference> addedDocRef = firestore.collection("comentarios").add(comentario);
+        
+        addedDocRef.addListener(() -> {
+            try {
+                DocumentReference docRef = addedDocRef.get(); 
+                comentario.setId(docRef.getId()); 
+                future.complete(comentario);
+            } catch (InterruptedException | ExecutionException e) {
+                future.completeExceptionally(e);
+            }
+        }, Runnable::run);
+
+        return future;
     }
 
-    
-    
 
+    public CompletableFuture<List<Comentario>> listarComentarios() {
+        CompletableFuture<List<Comentario>> future = new CompletableFuture<>();
 
+        CollectionReference comentariosCollection = firestore.collection("comentarios");
+
+        ApiFuture<QuerySnapshot> querySnapshotApiFuture = comentariosCollection.get();
+
+        querySnapshotApiFuture.addListener(() -> {
+            try {
+                List<Comentario> comentarios = new ArrayList<>();
+                for (var document : querySnapshotApiFuture.get().getDocuments()) {
+                    Comentario comentario = document.toObject(Comentario.class);
+                    comentario.setId(document.getId());
+                    comentarios.add(comentario);
+                }
+                future.complete(comentarios); 
+            } catch (InterruptedException | ExecutionException e) {
+                future.completeExceptionally(e);
+            }
+        }, Runnable::run);
+
+        return future;
+    }
 }

@@ -2,8 +2,6 @@ package com.snpsolutions.reclamala.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
-
-import com.snpsolutions.reclamala.enums.TipoUsuario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +23,7 @@ public class Usuario implements Serializable {
 
     private String password;
 
-    private TipoUsuario tipoUsuario;
+    private UsuarioTipo tipoUsuario;
 
     @Override
     public int hashCode() {
@@ -48,7 +46,5 @@ public class Usuario implements Serializable {
             return false;
         return true;
     }
-
-
 
 }

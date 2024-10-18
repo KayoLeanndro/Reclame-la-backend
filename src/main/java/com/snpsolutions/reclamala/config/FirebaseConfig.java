@@ -16,19 +16,21 @@ import java.io.IOException;
 public class FirebaseConfig {
 
     @Bean
-    public Firestore firebaseDatabase() throws IOException {
-        FileInputStream serviceAccount = new FileInputStream("firebase-service-account.json"); // Altere o caminho para o arquivo JSON
+    public Firestore firestore() throws IOException {
+        FileInputStream serviceAccount = new FileInputStream("firebase-service-account.json"); 
 
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setDatabaseUrl("https://reclama-la.firebaseio.com/") // Altere conforme sua URL do Firebase
+                .setDatabaseUrl("https://reclama-la.firebaseio.com/") 
                 .build();
 
-        // Inicializa o FirebaseApp se ainda não estiver inicializado
         if (FirebaseApp.getApps().isEmpty()) {
             FirebaseApp.initializeApp(options);
         }
 
-        return FirestoreOptions.getDefaultInstance().getService();
+        return FirestoreOptions.newBuilder()
+        .setCredentials(GoogleCredentials.fromStream(new FileInputStream("firebase-service-account.json")))
+        .build()
+        .getService();                      
     }
 }

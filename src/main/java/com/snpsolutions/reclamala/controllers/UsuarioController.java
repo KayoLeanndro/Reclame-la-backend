@@ -23,10 +23,18 @@ public class UsuarioController {
     }
 
     @PostMapping("/criarUsuario")
-    public CompletableFuture<ResponseEntity<Usuario>> adicionarUsuario(@RequestBody Usuario usuario){
-        return usuarioService.addUsuario(usuario)
-                             .thenApply(result -> ResponseEntity.status(HttpStatus.SC_CREATED).body(usuario))
-                             .exceptionally(ex -> ResponseEntity.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).build());
-    }
+    public CompletableFuture<ResponseEntity<Usuario>> addUsuario(@RequestBody Usuario usuario){
+        if (usuario == null) {
+            return CompletableFuture.completedFuture(ResponseEntity.badRequest().build());
+        }
 
+        return usuarioService.addUsuario(usuario)
+                             .thenApply(result -> ResponseEntity.status(HttpStatus.SC_CREATED).body(result)) 
+                             .exceptionally(ex -> {
+                                 ex.printStackTrace();
+                                 return ResponseEntity.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).build();
+                             });
+    }
 }
+
+

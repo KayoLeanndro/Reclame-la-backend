@@ -58,9 +58,13 @@
 		<dependency>
    			<groupId>com.google.firebase</groupId>
     		<artifactId>firebase-admin</artifactId>
-  	    	<version>9.1.1</version> <!-- Verifique a versão mais recente -->
+  	    	<version>9.1.1</version> 
 		</dependency>
-
+		<dependency>
+   			<groupId>com.google.cloud</groupId>
+    		<artifactId>google-cloud-firestore</artifactId>
+    		<version>3.7.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -5,8 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import com.google.cloud.firestore.DocumentReference;
-import com.snpsolutions.reclamala.enums.CategoriaComentario;
-
+import com.fasterxml.jackson.annotation.JsonFormat; 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +29,7 @@ public class Comentario implements Serializable {
 
     private DocumentReference usuarioComentario; 
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss") 
     private LocalDateTime dataCriacaoComentario;
 
     @Override
@@ -41,13 +41,9 @@ public class Comentario implements Serializable {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
+        if (obj == null || getClass() != obj.getClass())
             return false;
         Comentario other = (Comentario) obj;
-        if (id != other.id)
-            return false;
-        return true;
+        return Objects.equals(id, other.id); 
     }
 }

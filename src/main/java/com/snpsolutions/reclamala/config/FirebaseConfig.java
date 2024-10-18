@@ -1,6 +1,8 @@
 package com.snpsolutions.reclamala.config;
 
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.FirestoreOptions;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.FirebaseDatabase;
@@ -14,7 +16,7 @@ import java.io.IOException;
 public class FirebaseConfig {
 
     @Bean
-    public FirebaseDatabase firebaseDatabase() throws IOException {
+    public Firestore firebaseDatabase() throws IOException {
         FileInputStream serviceAccount = new FileInputStream("firebase-service-account.json"); // Altere o caminho para o arquivo JSON
 
         FirebaseOptions options = FirebaseOptions.builder()
@@ -27,6 +29,6 @@ public class FirebaseConfig {
             FirebaseApp.initializeApp(options);
         }
 
-        return FirebaseDatabase.getInstance(); // Retorna a instância do FirebaseDatabase
+        return FirestoreOptions.getDefaultInstance().getService();
     }
 }

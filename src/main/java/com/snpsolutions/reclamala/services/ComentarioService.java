@@ -28,13 +28,10 @@ public class ComentarioService {
     public CompletableFuture<Comentario> addComentario(Comentario comentario, String usuarioId) {
         CompletableFuture<Comentario> future = new CompletableFuture<>();
 
-        // Cria uma referência ao documento do usuário
         DocumentReference usuarioRef = firestore.collection("usuarios").document(usuarioId);
 
-        // Define a referência do usuário no comentário
         comentario.setUsuarioComentario(usuarioRef);
 
-        // Adiciona o comentário na coleção "comentarios"
         ApiFuture<DocumentReference> addedDocRef = firestore.collection("comentarios").add(comentario);
         
         addedDocRef.addListener(() -> {

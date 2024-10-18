@@ -26,11 +26,11 @@ public class ComentarioController {
         this.comentarioService = comentarioService;
    }
 
-   @PostMapping("/createComment")
+   @PostMapping("/criarComentario")
    public CompletableFuture<ResponseEntity<Comentario>> adicionarComentario(@RequestBody Comentario comentario, String usuarioReferencia){
         return comentarioService.addComentario(comentario, usuarioReferencia)
-        .thenApply(result -> ResponseEntity.status(HttpStatus.CREATED).body(comentario))
-        .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+               .thenApply(result -> ResponseEntity.status(HttpStatus.CREATED).body(comentario))
+               .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
    }
 
     

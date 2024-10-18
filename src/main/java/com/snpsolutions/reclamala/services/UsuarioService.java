@@ -1,15 +1,14 @@
 package com.snpsolutions.reclamala.services;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.WriteResult;
 import com.snpsolutions.reclamala.entities.Usuario;
-import lombok.RequiredArgsConstructor;
+
 
 @Service
 public class UsuarioService {
@@ -21,23 +20,34 @@ public class UsuarioService {
     this.firestore = firestore;
   }
 
-  public CompletableFuture<Usuario> addUsuario(Usuario usuario) {
-    // Cria uma referência à coleção 'usuarios' no Firestore
+  private <T> CompletableFuture<T> convertToCompletableFuture(ApiFuture<T> apiFuture) {
+    CompletableFuture<T> completableFuture = new CompletableFuture<>();
+    apiFuture.addListener(() -> {
+        try {
+            completableFuture.complete(apiFuture.get());
+        } catch (Exception e) {
+            completableFuture.completeExceptionally(e);
+        }
+    }, Runnable::run);
+    return completableFuture;
+}
+
+public CompletableFuture<Usuario> addUsuario(Usuario usuario) {
     DocumentReference docRef = firestore.collection("usuarios").document();
+    usuario.setId(docRef.getId());
     
-    // Adiciona o ID gerado ao objeto usuário
-    usuario.setId(Long.valueOf(docRef.getId()));
+    ApiFuture<WriteResult> futureWriteResult = docRef.set(usuario);
+
+    CompletableFuture<WriteResult> completableFuture = convertToCompletableFuture(futureWriteResult);
     
-    // Salva o usuário no Firestore
-    return docRef.set(usuario)
-        .thenApply(result -> {
-            return usuario;  // Retorna o usuário após ser salvo
-        })
-        .exceptionally(ex -> {
-            ex.printStackTrace();
-            return null;  // Lida com erros de forma apropriada
+    return completableFuture.thenApply(writeResult -> usuario)
+        .exceptionally(exception -> {
+            exception.printStackTrace();
+            return null;  
         });
 }
+
+
 
   
 

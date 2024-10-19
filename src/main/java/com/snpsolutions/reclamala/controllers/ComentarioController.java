@@ -19,20 +19,4 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("api/v1/comentario")
 public class ComentarioController {
     
-    private final ComentarioService comentarioService;
-
-   @Autowired
-   public ComentarioController(ComentarioService comentarioService){
-        this.comentarioService = comentarioService;
-   }
-
-   @PostMapping("/criarComentario")
-   public CompletableFuture<ResponseEntity<Comentario>> adicionarComentario(@RequestBody Comentario comentario, String usuarioReferencia){
-        return comentarioService.addComentario(comentario, usuarioReferencia)
-               .thenApply(result -> ResponseEntity.status(HttpStatus.CREATED).body(comentario))
-               .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
-   }
-
-    
-
 }

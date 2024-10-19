@@ -3,16 +3,17 @@ package com.snpsolutions.reclamala;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 @SpringBootApplication
 public class ReclamalaApplication {
 
 	public static void main(String[] args) {
+		Dotenv dotenv = Dotenv.load();
+        System.setProperty("DB_URL", dotenv.get("DB_URL"));
+        System.setProperty("DB_USER", dotenv.get("DB_USER"));
+        System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
 		SpringApplication.run(ReclamalaApplication.class, args);
-
-		System.out.println("DB_HOST: " + System.getenv("DB_HOST"));
-		System.out.println("DB_PORT: " + System.getenv("DB_PORT"));
-		System.out.println("DB_NAME: " + System.getenv("DB_NAME"));
-		System.out.println("DB_USERNAME: " + System.getenv("DB_USERNAME"));
+			
 	}
-
 }

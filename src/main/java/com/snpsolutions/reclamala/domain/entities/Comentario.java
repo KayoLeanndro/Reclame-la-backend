@@ -1,4 +1,4 @@
-package com.snpsolutions.reclamala.entities;
+package com.snpsolutions.reclamala.domain.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -42,20 +42,11 @@ public class Comentario implements Serializable {
     private String categoriaComentario; 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = false) 
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuarioComentario;
-
+    
     @Column(name = "data_criacao_comentario")
     private LocalDateTime dataCriacaoComentario;
-
-    
-    public ComentarioTipo getCategoriaComentario() {
-        return new ComentarioTipo(categoriaComentario);
-    }
-
-    public void setCategoriaComentario(ComentarioTipo categoriaComentario) {
-        this.categoriaComentario = categoriaComentario.getComentarioCategoria();
-    }
 
     @Override
     public int hashCode() {

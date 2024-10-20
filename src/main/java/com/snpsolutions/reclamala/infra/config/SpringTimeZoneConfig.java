@@ -1,4 +1,4 @@
-package com.snpsolutions.reclamala.config;
+package com.snpsolutions.reclamala.infra.config;
 
 import java.util.TimeZone;
 import org.springframework.context.annotation.Configuration;

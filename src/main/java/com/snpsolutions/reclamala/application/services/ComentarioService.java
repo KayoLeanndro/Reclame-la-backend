@@ -1,4 +1,4 @@
-package com.snpsolutions.reclamala.services;
+package com.snpsolutions.reclamala.application.services;
 
 import org.springframework.stereotype.Service;
 

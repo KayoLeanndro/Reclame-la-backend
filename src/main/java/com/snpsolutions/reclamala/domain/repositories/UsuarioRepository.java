@@ -1,4 +1,4 @@
-package com.snpsolutions.reclamala.repositories;
+package com.snpsolutions.reclamala.domain.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

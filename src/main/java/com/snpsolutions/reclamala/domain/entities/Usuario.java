@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+import com.snpsolutions.reclamala.domain.enums.CursoTipo;
+import com.snpsolutions.reclamala.domain.enums.Instituicao;
 import com.snpsolutions.reclamala.domain.enums.UsuarioTipo;
 
 import jakarta.persistence.*;
@@ -27,6 +29,9 @@ public class Usuario implements Serializable {
     @Column(name = "matricula", nullable = false, unique = true)
     private Integer matricula;
 
+    @Column(name = "email", nullable = false)
+    private  String email;
+
     @Column(name = "usuario_cpf", nullable = false, unique = true)
     private String usuarioCpf;
 
@@ -40,9 +45,17 @@ public class Usuario implements Serializable {
     @Column(name = "tipo_usuario", nullable = false) 
     private UsuarioTipo tipoUsuario;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "aluno_curso", nullable = false)
+    public CursoTipo cursoTipo;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "instituicao", nullable = false)
+    public Instituicao Instituicao;
+
     @OneToMany(mappedBy = "usuarioComentario", fetch = FetchType.LAZY)
     private List<Comentario> comentarios;
-
+    
     @Override
     public int hashCode() {
         return Objects.hash(id);

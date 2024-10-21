@@ -1,4 +1,4 @@
-package com.snpsolutions.reclamala.controllers;
+package com.snpsolutions.reclamala.application.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.snpsolutions.reclamala.application.services.UsuarioService;
 import com.snpsolutions.reclamala.domain.dtos.UsuarioDTO;
 import com.snpsolutions.reclamala.domain.entities.Usuario;
 import com.snpsolutions.reclamala.infra.config.ApiResponse;
-import com.snpsolutions.reclamala.services.UsuarioService;
 
 import jakarta.persistence.EntityNotFoundException;
 

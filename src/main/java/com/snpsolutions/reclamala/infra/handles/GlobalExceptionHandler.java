@@ -16,6 +16,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
+    @ExceptionHandler(UsuarioTipoDiferenteException.class)
+    public ResponseEntity<ApiResponse> handleUsuarioTipoDiferente(Exception ex) {
+        ApiResponse response = new ApiResponse(ex.getMessage(), false);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(EmailNaoValidoException.class)
+    public ResponseEntity<ApiResponse> handleEmailNaoValidoException(Exception ex) {
+        ApiResponse response = new ApiResponse(ex.getMessage(), false);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    } 
+    
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse> handleGlobalException(Exception ex) {
         ApiResponse response = new ApiResponse("Erro interno do servidor.", false);

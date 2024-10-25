@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
+
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 
@@ -11,7 +13,9 @@ import com.snpsolutions.reclamala.domain.dtos.UsuarioDTO;
 import com.snpsolutions.reclamala.domain.entities.Usuario;
 import com.snpsolutions.reclamala.domain.enums.UsuarioTipo;
 import com.snpsolutions.reclamala.domain.repositories.UsuarioRepository;
+import com.snpsolutions.reclamala.infra.handles.SenhaIncorretaException;
 import com.snpsolutions.reclamala.infra.handles.UsuarioJaCadastradoException;
+import com.snpsolutions.reclamala.infra.handles.UsuarioNaoEncontradoException;
 import com.snpsolutions.reclamala.infra.handles.UsuarioTipoDiferenteException;
 
 
@@ -63,5 +67,20 @@ public class UsuarioService {
         return email != null && EMAIL_PATTERN.matcher(email).matches();
    }
 
+   public Usuario loginUsuario(Integer matricula, String senha) {
+    Optional<Usuario> usuarioEncontrado = usuarioRepository.findByMatricula(matricula);
+
+    if (!usuarioEncontrado.isPresent()) {
+        throw new UsuarioNaoEncontradoException("Usuário não encontrado com a matrícula: " + matricula);
+    }
+
+    Usuario usuario = usuarioEncontrado.get();
+
+    if (!senha.equals(usuario.getPassword())) { 
+        throw new SenhaIncorretaException("Senha incorreta para o usuário: " + matricula);
+    }
+
+    return usuario;
+}
 
 }

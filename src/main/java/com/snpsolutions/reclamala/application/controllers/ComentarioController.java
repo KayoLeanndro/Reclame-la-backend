@@ -30,7 +30,7 @@ public class ComentarioController {
     @GetMapping("/{id}")
     @Operation(summary = "Cadastro de usuario", description = "Realiza o cadastro de um usuário do tipo aluno")
     public ResponseEntity<Comentario> buscarComentarioPorCategoria(@PathVariable ComentarioTipo tipoComentario) {
-        Optional<Comentario> comentario = comentarioService.buscarComentarioPorCategoria(tipoComentario);
+        Optional<Comentario> comentario = comentarioService.listarComentarioPorCategoria(tipoComentario);
         return comentario.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 

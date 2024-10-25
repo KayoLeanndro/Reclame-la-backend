@@ -8,6 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.snpsolutions.reclamala.domain.entities.Comentario;
 import com.snpsolutions.reclamala.domain.entities.Usuario;
+import com.snpsolutions.reclamala.domain.enums.ComentarioTipo;
+
+import io.swagger.v3.oas.annotations.Operation;
+
 import com.snpsolutions.reclamala.application.services.ComentarioService;
 
 @RestController
@@ -24,8 +28,9 @@ public class ComentarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Comentario> buscarComentarioPorId(@PathVariable Long id) {
-        Optional<Comentario> comentario = comentarioService.buscarComentarioPorId(id);
+    @Operation(summary = "Cadastro de usuario", description = "Realiza o cadastro de um usuário do tipo aluno")
+    public ResponseEntity<Comentario> buscarComentarioPorCategoria(@PathVariable ComentarioTipo tipoComentario) {
+        Optional<Comentario> comentario = comentarioService.buscarComentarioPorCategoria(tipoComentario);
         return comentario.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.snpsolutions.reclamala.domain.entities.Comentario;
 import com.snpsolutions.reclamala.domain.entities.Usuario;
+import com.snpsolutions.reclamala.domain.enums.ComentarioTipo;
 import com.snpsolutions.reclamala.domain.repositories.ComentarioRepository;
 
 @Service
@@ -23,8 +24,9 @@ public class ComentarioService {
         return comentarioRepository.findByUsuarioComentario(usuario);
     }
 
-    public Optional<Comentario> buscarComentarioPorId(Long id) {
-        return comentarioRepository.findById(id);
+    public List<Comentario> listarComentarioPorCategoria(ComentarioTipo comentarioTipo){
+        return comentarioRepository.buscarComentarioPorCategoria(comentarioTipo);
+
     }
 
     @Transactional

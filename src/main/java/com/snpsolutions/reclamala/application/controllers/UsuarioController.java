@@ -26,6 +26,7 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @PostMapping("/cadastrarUsuarioAluno")
+    @Operation(summary = "Cadastro de usuario", description = "Realiza o cadastro de um usuário do tipo aluno")
     public ResponseEntity<ApiResponse> cadastrarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
         try {
             Usuario usuario = usuarioService.cadastrarUsuarioAluno(usuarioDTO);

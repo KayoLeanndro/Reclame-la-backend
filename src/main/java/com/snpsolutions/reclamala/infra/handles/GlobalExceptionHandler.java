@@ -28,13 +28,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     } 
 
-    @ExceptionHandler(EmailNaoValidoException.class)
+    @ExceptionHandler(SenhaIncorretaException.class)
     public ResponseEntity<ApiResponse> handleSenhaIncorretaException(Exception ex) {
         ApiResponse response = new ApiResponse(ex.getMessage(), false);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
     
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(UsuarioNaoEncontradoException.class)
     public ResponseEntity<ApiResponse> UsuarioNaoEncontradoException(Exception ex) {
         ApiResponse response = new ApiResponse("Erro interno do servidor.", false);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);

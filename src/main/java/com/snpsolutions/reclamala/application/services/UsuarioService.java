@@ -52,6 +52,9 @@ public class UsuarioService {
                     + "Não é aceitavel" + "Tipo aceitavel é: " + usuarioDTO.getTipoUsuario().ALUNO);
         }
         usuario.setTipoUsuario(usuarioDTO.getTipoUsuario());
+        usuario.setInstituicao(usuarioDTO.getInstituicao());
+        usuario.setCursoTipo(usuarioDTO.getCursoTipo());
+        usuario.setEmail(usuarioDTO.getEmail());
 
         return usuarioRepository.save(usuario);
     }

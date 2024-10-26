@@ -29,18 +29,21 @@ public class ComentarioController {
     private UsuarioService usuarioService;
 
     @GetMapping("/listarComentarios")
+    @Operation(summary = "Listar Comentarios", description = "Realiza o retorna uma lista de comentarios")
     public ResponseEntity<List<Comentario>> listarComentarios() {
         List<Comentario> comentarios = comentarioService.listarComentarios();
         return ResponseEntity.ok(comentarios);
     }
 
-    @GetMapping("/categoria")
+    @GetMapping("/buscarComentarioPorcategoria")
+    @Operation(summary = "Buscar Comentario por categoria", description = "Realiza uma busca de comentarios de uma determinada categorias")
     public ResponseEntity<List<Comentario>> buscarComentarioPorCategoria(@RequestParam ComentarioTipo tipoComentario) {
         List<Comentario> comentarios = comentarioService.listarComentarioPorCategoria(tipoComentario);
         return comentarios.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(comentarios);
     }
 
     @GetMapping("/usuario/{usuarioId}")
+    @Operation(summary = "Listar comentario por usuario", description = "Realiza uma busca pelo comentario de um usuario")
     public ResponseEntity<List<Comentario>> listarComentariosPorUsuario(@PathVariable Integer matricula) {
         Usuario usuario = usuarioService.buscarUsuarioPorMatricula(matricula)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
@@ -49,12 +52,14 @@ public class ComentarioController {
     }
 
     @PostMapping
+    @Operation(summary = "Criar Comentario", description = "Realiza a criacao de um comentario")
     public ResponseEntity<Comentario> criarComentario(@Valid @RequestBody ComentarioDTO comentarioDTO) {
         Comentario novoComentario = comentarioService.criarComentario(comentarioDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoComentario);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Atualizar comentario", description = "Realiza uma atualizacao de comentario")
     public ResponseEntity<Comentario> atualizarComentario(@PathVariable Long id,
             @RequestBody Comentario comentarioAtualizado) {
         Comentario comentario = comentarioService.atualizarComentario(id, comentarioAtualizado);
@@ -62,12 +67,14 @@ public class ComentarioController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Excluir comentario", description = "Exclui o comentario")
     public ResponseEntity<Void> excluirComentario(@PathVariable Long id) {
         comentarioService.excluirComentario(id);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/curtir")
+    @Operation(summary = "Curtir comentario", description = "Curte o comentario")
     public ResponseEntity<Void> curtirComentario(@PathVariable Long id) {
         comentarioService.curtirComentario(id);
         return ResponseEntity.noContent().build();

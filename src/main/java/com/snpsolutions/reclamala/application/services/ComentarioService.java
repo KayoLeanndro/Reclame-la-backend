@@ -1,7 +1,6 @@
 package com.snpsolutions.reclamala.application.services;
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,14 +23,14 @@ public class ComentarioService {
         return comentarioRepository.findByUsuarioComentario(usuario);
     }
 
-    public List<Comentario> listarComentarioPorCategoria(ComentarioTipo comentarioTipo){
-        return comentarioRepository.findByComentarioTipo(comentarioTipo);
+    public List<Comentario> listarComentarioPorCategoria(ComentarioTipo comentarioTipo) {
+        return comentarioRepository.findByCategoriaComentario(comentarioTipo);
     }
 
     @Transactional
     public Comentario salvarComentario(Comentario comentario) {
         comentario.setDataCriacaoComentario(java.time.LocalDateTime.now());
-        comentario.setQtdCurtidas(0); 
+        comentario.setQtdCurtidas(0);
         return comentarioRepository.save(comentario);
     }
 

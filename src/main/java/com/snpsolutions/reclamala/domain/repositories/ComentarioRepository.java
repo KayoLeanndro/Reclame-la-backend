@@ -9,7 +9,7 @@ import com.snpsolutions.reclamala.domain.enums.ComentarioTipo;
 
 public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
 
-    List<Comentario> findByComentarioTipo(ComentarioTipo tipo);
+    List<Comentario> findByCategoriaComentario(ComentarioTipo categoriaComentario);
 
     List<Comentario> findByUsuarioComentario(Usuario usuario);
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.snpsolutions.reclamala.domain.dtos.ComentarioDTO;
 import com.snpsolutions.reclamala.domain.entities.Comentario;
 import com.snpsolutions.reclamala.domain.entities.Usuario;
 import com.snpsolutions.reclamala.domain.enums.ComentarioTipo;
@@ -26,7 +28,7 @@ public class ComentarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping
+    @GetMapping("/listarComentarios")
     public ResponseEntity<List<Comentario>> listarComentarios() {
         List<Comentario> comentarios = comentarioService.listarComentarios();
         return ResponseEntity.ok(comentarios);
@@ -47,8 +49,8 @@ public class ComentarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Comentario> criarComentario(@Valid @RequestBody Comentario comentario) {
-        Comentario novoComentario = comentarioService.salvarComentario(comentario);
+    public ResponseEntity<Comentario> criarComentario(@Valid @RequestBody ComentarioDTO comentarioDTO) {
+        Comentario novoComentario = comentarioService.criarComentario(comentarioDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoComentario);
     }
 

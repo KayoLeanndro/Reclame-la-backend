@@ -65,6 +65,11 @@ public class UsuarioService {
         return passwordEncoder.encode(senha);
     }
 
+    public boolean verificarSenha(String senha, String hash) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(senha, hash);
+    }
+
     public boolean emailEhValido(String email) {
         return email != null && EMAIL_PATTERN.matcher(email).matches();
     }
@@ -78,7 +83,7 @@ public class UsuarioService {
 
         Usuario usuario = usuarioEncontrado.get();
 
-        if (!senha.equals(usuario.getPassword())) {
+        if (!this.verificarSenha(senha, usuario.getPassword())) {
             throw new SenhaIncorretaException("Senha incorreta para o usuário: " + matricula);
         }
 

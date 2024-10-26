@@ -8,7 +8,6 @@ import jakarta.transaction.Transactional;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-
 import com.snpsolutions.reclamala.domain.dtos.UsuarioDTO;
 import com.snpsolutions.reclamala.domain.entities.Usuario;
 import com.snpsolutions.reclamala.domain.enums.UsuarioTipo;
@@ -17,7 +16,6 @@ import com.snpsolutions.reclamala.infra.handles.SenhaIncorretaException;
 import com.snpsolutions.reclamala.infra.handles.UsuarioJaCadastradoException;
 import com.snpsolutions.reclamala.infra.handles.UsuarioNaoEncontradoException;
 import com.snpsolutions.reclamala.infra.handles.UsuarioTipoDiferenteException;
-
 
 @Service
 public class UsuarioService {
@@ -32,7 +30,8 @@ public class UsuarioService {
     public Usuario cadastrarUsuarioAluno(UsuarioDTO usuarioDTO) {
 
         if (usuarioRepository.existsByMatricula(usuarioDTO.getMatricula())) {
-            throw new UsuarioJaCadastradoException("Usuário com matrícula " + usuarioDTO.getMatricula() + " já cadastrado.");
+            throw new UsuarioJaCadastradoException(
+                    "Usuário com matrícula " + usuarioDTO.getMatricula() + " já cadastrado.");
         }
 
         if (!emailEhValido(usuarioDTO.getEmail())) {
@@ -49,38 +48,42 @@ public class UsuarioService {
         usuario.setPassword(criptografarSenha(usuarioDTO.getPassword()));
 
         if (usuarioDTO.getTipoUsuario() != UsuarioTipo.ALUNO) {
-            throw new UsuarioTipoDiferenteException("Tipo do Usuario" + usuarioDTO.getTipoUsuario() 
-                                                    + "Não é aceitavel" +  "Tipo aceitavel é: " + usuarioDTO.getTipoUsuario().ALUNO);
+            throw new UsuarioTipoDiferenteException("Tipo do Usuario" + usuarioDTO.getTipoUsuario()
+                    + "Não é aceitavel" + "Tipo aceitavel é: " + usuarioDTO.getTipoUsuario().ALUNO);
         }
         usuario.setTipoUsuario(usuarioDTO.getTipoUsuario());
-        
+
         return usuarioRepository.save(usuario);
     }
 
-    public String criptografarSenha(String senha){
-       
+    public String criptografarSenha(String senha) {
+
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(senha);
     }
 
-   public boolean emailEhValido(String email){
+    public boolean emailEhValido(String email) {
         return email != null && EMAIL_PATTERN.matcher(email).matches();
-   }
-
-   public Usuario loginUsuario(Integer matricula, String senha) {
-    Optional<Usuario> usuarioEncontrado = usuarioRepository.findByMatricula(matricula);
-
-    if (!usuarioEncontrado.isPresent()) {
-        throw new UsuarioNaoEncontradoException("Usuário não encontrado com a matrícula: " + matricula);
     }
 
-    Usuario usuario = usuarioEncontrado.get();
+    public Usuario loginUsuario(Integer matricula, String senha) {
+        Optional<Usuario> usuarioEncontrado = usuarioRepository.findByMatricula(matricula);
 
-    if (!senha.equals(usuario.getPassword())) { 
-        throw new SenhaIncorretaException("Senha incorreta para o usuário: " + matricula);
+        if (!usuarioEncontrado.isPresent()) {
+            throw new UsuarioNaoEncontradoException("Usuário não encontrado com a matrícula: " + matricula);
+        }
+
+        Usuario usuario = usuarioEncontrado.get();
+
+        if (!senha.equals(usuario.getPassword())) {
+            throw new SenhaIncorretaException("Senha incorreta para o usuário: " + matricula);
+        }
+
+        return usuario;
     }
 
-    return usuario;
-}
+    public Optional<Usuario> buscarUsuarioPorMatricula(Integer matricula) {
+        return usuarioRepository.findByMatricula(matricula);
+    }
 
 }

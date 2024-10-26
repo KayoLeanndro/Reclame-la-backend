@@ -24,9 +24,8 @@ public class ComentarioService {
         return comentarioRepository.findByUsuarioComentario(usuario);
     }
 
-    public Optional<Comentario> listarComentarioPorCategoria(ComentarioTipo comentarioTipo){
-        return comentarioRepository.buscarComentarioPorCategoria(comentarioTipo);
-
+    public List<Comentario> listarComentarioPorCategoria(ComentarioTipo comentarioTipo){
+        return comentarioRepository.findByComentarioTipo(comentarioTipo);
     }
 
     @Transactional

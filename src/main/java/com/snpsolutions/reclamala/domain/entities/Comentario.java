@@ -3,8 +3,13 @@ package com.snpsolutions.reclamala.domain.entities;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+import com.snpsolutions.reclamala.domain.enums.ComentarioTipo;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,6 +32,7 @@ public class Comentario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cmtr_id")
     private Long id; 
 
     @Column(name = "titulo_comentario", nullable = false)
@@ -38,11 +44,12 @@ public class Comentario implements Serializable {
     @Column(name = "qtd_curtidas", nullable = false)
     private Integer qtdCurtidas;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "categoria_comentario", nullable = false) 
-    private String categoriaComentario; 
+    private ComentarioTipo categoriaComentario; 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "usur_id", nullable = false)
     private Usuario usuarioComentario;
     
     @Column(name = "data_criacao_comentario")

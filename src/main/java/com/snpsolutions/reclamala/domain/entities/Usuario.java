@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.snpsolutions.reclamala.domain.enums.CursoTipo;
-import com.snpsolutions.reclamala.domain.enums.Instituicao;
+import com.snpsolutions.reclamala.domain.enums.InstituicaoTipo;
 import com.snpsolutions.reclamala.domain.enums.UsuarioTipo;
 
 import jakarta.persistence.*;
@@ -24,6 +24,7 @@ public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "usur_id")
     private Long id;
 
     @Column(name = "matricula", nullable = false, unique = true)
@@ -51,7 +52,7 @@ public class Usuario implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "instituicao", nullable = false)
-    public Instituicao Instituicao;
+    public InstituicaoTipo Instituicao;
 
     @OneToMany(mappedBy = "usuarioComentario", fetch = FetchType.LAZY)
     private List<Comentario> comentarios;

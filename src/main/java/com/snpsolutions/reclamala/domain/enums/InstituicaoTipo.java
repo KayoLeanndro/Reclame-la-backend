@@ -1,10 +1,9 @@
 package com.snpsolutions.reclamala.domain.enums;
 
-public enum Instituicao {
+public enum InstituicaoTipo {
     CESAR,
     UNIT,
     SENAC,
     FICR,
     CATOLICA
-
 }

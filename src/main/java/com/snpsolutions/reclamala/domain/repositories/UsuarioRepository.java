@@ -8,6 +8,8 @@ import com.snpsolutions.reclamala.domain.entities.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     boolean existsByMatricula(Integer matricula);
+
     boolean existsByUsuarioCpf(String usuarioCpf);
+
     Optional<Usuario> findByMatricula(Integer matricula);
 }

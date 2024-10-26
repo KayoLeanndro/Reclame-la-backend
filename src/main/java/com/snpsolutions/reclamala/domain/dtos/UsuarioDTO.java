@@ -2,7 +2,7 @@ package com.snpsolutions.reclamala.domain.dtos;
 
 import com.snpsolutions.reclamala.domain.entities.Usuario;
 import com.snpsolutions.reclamala.domain.enums.CursoTipo;
-import com.snpsolutions.reclamala.domain.enums.Instituicao;
+import com.snpsolutions.reclamala.domain.enums.InstituicaoTipo;
 import com.snpsolutions.reclamala.domain.enums.UsuarioTipo;
 
 import jakarta.validation.constraints.Email;
@@ -41,7 +41,7 @@ public class UsuarioDTO {
     private CursoTipo cursoTipo;
 
     @NotNull(message = "Instituição é obrigatória.")
-    private Instituicao instituicao;
+    private InstituicaoTipo instituicao;
 
     /**
      * Converte o DTO para a entidade Usuario.

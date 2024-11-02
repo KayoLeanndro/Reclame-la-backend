@@ -44,7 +44,7 @@ public class ComentarioService {
         novoComentario.setTituloComentario(comentarioDTO.getTituloComentario());
         novoComentario.setConteudoComentario(comentarioDTO.getConteudoComentario());
         novoComentario.setQtdCurtidas(0);
-        novoComentario.setCategoriaComentario(ComentarioTipo.valueOf(comentarioDTO.getCategoriaComentario())); 
+        novoComentario.setCategoriaComentario(ComentarioTipo.valueOf(comentarioDTO.getCategoriaComentario().toUpperCase()));
         novoComentario.setUsuarioComentario(usuario);
         novoComentario.setDataCriacaoComentario(LocalDateTime.now());
 

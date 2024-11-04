@@ -47,10 +47,11 @@ public class UsuarioService {
         usuario.setUsername(usuarioDTO.getUsername());
         usuario.setPassword(criptografarSenha(usuarioDTO.getPassword()));
 
-        if (usuarioDTO.getTipoUsuario() != UsuarioTipo.ALUNO) {
-            throw new UsuarioTipoDiferenteException("Tipo do Usuario" + usuarioDTO.getTipoUsuario()
-                    + "Não é aceitavel" + "Tipo aceitavel é: " + usuarioDTO.getTipoUsuario().ALUNO);
+        if (usuarioDTO.getTipoUsuario() != UsuarioTipo.ALUNO && usuarioDTO.getTipoUsuario() != UsuarioTipo.ADMINISTRADOR) {
+            throw new UsuarioTipoDiferenteException("Tipo do Usuario " + usuarioDTO.getTipoUsuario()
+                    + " não é aceitável. Tipos aceitáveis são: ALUNO e ADMINISTRADOR.");
         }
+        
         usuario.setTipoUsuario(usuarioDTO.getTipoUsuario());
         usuario.setInstituicao(usuarioDTO.getInstituicao());
         usuario.setCursoTipo(usuarioDTO.getCursoTipo());

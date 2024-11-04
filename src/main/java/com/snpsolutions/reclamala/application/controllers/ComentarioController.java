@@ -30,8 +30,8 @@ public class ComentarioController {
 
     @GetMapping("/listarComentarios")
     @Operation(summary = "Listar Comentarios", description = "Realiza o retorna uma lista de comentarios")
-    public ResponseEntity<List<Comentario>> listarComentarios() {
-        List<Comentario> comentarios = comentarioService.listarComentarios();
+    public ResponseEntity<List<ComentarioDTO>> listarComentarios() {
+        List<ComentarioDTO> comentarios = comentarioService.listarComentarios();
         return ResponseEntity.ok(comentarios);
     }
 
@@ -42,16 +42,16 @@ public class ComentarioController {
         return comentarios.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(comentarios);
     }
 
-    @GetMapping("/usuario/{usuarioId}")
+    @GetMapping("/usuario/{matricula}")
     @Operation(summary = "Listar comentario por usuario", description = "Realiza uma busca pelo comentario de um usuario")
-    public ResponseEntity<List<Comentario>> listarComentariosPorUsuario(@PathVariable Integer matricula) {
+    public ResponseEntity<List<ComentarioDTO>> listarComentariosPorUsuario(@PathVariable Integer matricula) {
         Usuario usuario = usuarioService.buscarUsuarioPorMatricula(matricula)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        List<Comentario> comentarios = comentarioService.listarComentariosPorUsuario(usuario);
+        List<ComentarioDTO> comentarios = comentarioService.listarComentariosPorUsuario(usuario);
         return ResponseEntity.ok(comentarios);
     }
 
-    @PostMapping
+    @PostMapping("/criarComentario")
     @Operation(summary = "Criar Comentario", description = "Realiza a criacao de um comentario")
     public ResponseEntity<Comentario> criarComentario(@Valid @RequestBody ComentarioDTO comentarioDTO) {
         Comentario novoComentario = comentarioService.criarComentario(comentarioDTO);

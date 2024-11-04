@@ -2,6 +2,8 @@ package com.snpsolutions.reclamala.application.services;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,13 +23,25 @@ public class ComentarioService {
     @Autowired
     private UsuarioService usuarioService;
 
-    public List<Comentario> listarComentarios() {
-        return comentarioRepository.findAll();
+    public List<ComentarioDTO> listarComentarios() {
+        List<Comentario> comentarios = comentarioRepository.findAll();
+        return comentarios.stream().map(this::toComentarioDTO).collect(Collectors.toList());
     }
 
-    public List<Comentario> listarComentariosPorUsuario(Usuario usuario) {
-        return comentarioRepository.findByUsuarioComentario(usuario);
+    public List<ComentarioDTO> listarComentariosPorUsuario(Usuario usuario) {
+       List<Comentario> comentarios = comentarioRepository.findByUsuarioComentario(usuario);
+       return comentarios.stream().map(this::toComentarioDTO).collect(Collectors.toList());
     }
+
+    private ComentarioDTO toComentarioDTO(Comentario comentario) {
+        ComentarioDTO dto = new ComentarioDTO();
+        dto.setTituloComentario(comentario.getTituloComentario());
+        dto.setConteudoComentario(comentario.getConteudoComentario());
+        dto.setCategoriaComentario(comentario.getCategoriaComentario());
+        dto.setMatriculaUsuario((comentario.getUsuarioComentario().getMatricula()));
+        return dto;
+    }
+    
 
     public List<Comentario> listarComentarioPorCategoria(ComentarioTipo comentarioTipo) {
         return comentarioRepository.findByCategoriaComentario(comentarioTipo);
@@ -44,11 +58,10 @@ public class ComentarioService {
         novoComentario.setTituloComentario(comentarioDTO.getTituloComentario());
         novoComentario.setConteudoComentario(comentarioDTO.getConteudoComentario());
         novoComentario.setQtdCurtidas(0);
-        novoComentario.setCategoriaComentario(ComentarioTipo.valueOf(comentarioDTO.getCategoriaComentario().toUpperCase()));
+        novoComentario.setCategoriaComentario(ComentarioTipo.valueOf(comentarioDTO.getCategoriaComentario().name().toUpperCase()));
         novoComentario.setUsuarioComentario(usuario);
         novoComentario.setDataCriacaoComentario(LocalDateTime.now());
 
-        // Salvar o comentário
         return comentarioRepository.save(novoComentario);
 
     }

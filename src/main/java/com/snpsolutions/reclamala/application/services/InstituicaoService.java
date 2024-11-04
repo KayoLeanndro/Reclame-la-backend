@@ -11,12 +11,9 @@ import java.util.regex.Pattern;
 
 import com.snpsolutions.reclamala.domain.dtos.InstituicaoDTO;
 import com.snpsolutions.reclamala.domain.entities.Instituicao;
-import com.snpsolutions.reclamala.domain.enums.InstituicaoTipo;
-import com.snpsolutions.reclamala.domain.repositories.InstituicaoRepository;
 import com.snpsolutions.reclamala.infra.handles.SenhaIncorretaException;
 import com.snpsolutions.reclamala.infra.handles.UsuarioJaCadastradoException;
 import com.snpsolutions.reclamala.infra.handles.UsuarioNaoEncontradoException;
-import com.snpsolutions.reclamala.infra.handles.UsuarioTipoDiferenteException;
 
 @Service
 public class InstituicaoService {

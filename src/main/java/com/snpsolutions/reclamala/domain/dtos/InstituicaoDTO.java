@@ -36,18 +36,4 @@ public class InstituicaoDTO {
     @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres.")
     private String password;
 
-    /**
-     * Converte o DTO para a entidade Instituicao.
-     *
-     * @return A entidade Instituicao correspondente.
-     */
-    public Instituicao toEntity() {
-        Instituicao instituicao = new Instituicao();
-        instituicao.setCnpj(this.cnpj);
-        instituicao.setEmail(this.email);
-        instituicao.setNome(this.nome);
-        instituicao.setTelefone(this.telefone);
-        instituicao.setPassword(this.password);
-        return instituicao;
-    }
 }

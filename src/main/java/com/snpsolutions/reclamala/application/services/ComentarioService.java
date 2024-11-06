@@ -70,10 +70,8 @@ public class ComentarioService {
     @Transactional
     public Comentario atualizarComentario(Long id, Comentario comentarioAtualizado) {
         return comentarioRepository.findById(id).map(comentario -> {
-            comentario.setTituloComentario(comentarioAtualizado.getTituloComentario());
-            comentario.setConteudoComentario(comentarioAtualizado.getConteudoComentario());
-            comentario.setCategoriaComentario(comentarioAtualizado.getCategoriaComentario());
-            return comentarioRepository.save(comentario);
+            
+            return comentarioRepository.save(comentarioAtualizado);
         }).orElseThrow(() -> new RuntimeException("Comentário não encontrado"));
     }
 

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.snpsolutions.reclamala.domain.enums.ComentarioTipo;
 
 import jakarta.persistence.Column;
@@ -51,10 +52,12 @@ public class Comentario implements Serializable {
     private ComentarioTipo categoriaComentario;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "usur_id", nullable = false)
     private Usuario usuarioComentario;
 
     @OneToMany(mappedBy = "comentario", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Resposta> respostaComentario;
 
     @Column(name = "data_criacao_comentario")

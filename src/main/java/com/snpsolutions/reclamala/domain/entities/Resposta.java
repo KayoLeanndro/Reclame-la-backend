@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,6 +35,7 @@ public class Resposta implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cmtr_id", nullable = false)
+    @JsonIgnore
     private Comentario comentario;
 
     @Column(name = "cntd_resposta", nullable = false)
@@ -43,6 +46,7 @@ public class Resposta implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usur_id", nullable = false)
+    @JsonIgnore
     private Usuario usuario; 
 
     @Column(name = "data_criacao_resposta", nullable = false)

@@ -52,7 +52,11 @@ public class ComentarioController {
     }
 
     @PostMapping("/criarComentario")
-    @Operation(summary = "Criar Comentario", description = "Realiza a criacao de um comentario")
+    @Operation(summary = "Criar Comentario", description = "Realiza a criacao de um comentario, Categoria aceite INFRAESTRUTURA,\r\n" + //
+                "    ENSINO,\r\n" + //
+                "    SUPORTE,\r\n" + //
+                "    OUTRO")
+    
     public ResponseEntity<Comentario> criarComentario(@Valid @RequestBody ComentarioDTO comentarioDTO) {
         Comentario novoComentario = comentarioService.criarComentario(comentarioDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoComentario);

@@ -2,6 +2,7 @@ package com.snpsolutions.reclamala.domain.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import com.snpsolutions.reclamala.domain.enums.ComentarioTipo;
@@ -16,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,13 +29,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "comentarios") 
+@Table(name = "comentarios")
 public class Comentario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cmtr_id")
-    private Long id; 
+    private Long id;
 
     @Column(name = "titulo_comentario", nullable = false)
     private String tituloComentario;
@@ -45,13 +47,16 @@ public class Comentario implements Serializable {
     private Integer qtdCurtidas;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "categoria_comentario", nullable = false) 
-    private ComentarioTipo categoriaComentario; 
+    @Column(name = "categoria_comentario", nullable = false)
+    private ComentarioTipo categoriaComentario;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usur_id", nullable = false)
     private Usuario usuarioComentario;
-    
+
+    @OneToMany(mappedBy = "comentario", fetch = FetchType.LAZY)
+    private List<Resposta> respostaComentario;
+
     @Column(name = "data_criacao_comentario")
     private LocalDateTime dataCriacaoComentario;
 

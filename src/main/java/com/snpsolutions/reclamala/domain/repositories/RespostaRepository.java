@@ -8,5 +8,5 @@ import com.snpsolutions.reclamala.domain.entities.Resposta;
 import com.snpsolutions.reclamala.domain.entities.Usuario;
 
 public interface RespostaRepository extends JpaRepository<Resposta, Long> {
-     List<Resposta> findByUsuarioComentario(Usuario usuario);   
+     List<Resposta> findByUsuario(Usuario usuario);   
 }

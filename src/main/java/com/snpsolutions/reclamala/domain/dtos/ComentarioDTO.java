@@ -22,6 +22,4 @@ public class ComentarioDTO {
     @NotNull
     private Integer matriculaUsuario;
 
-    private Integer qtdCurtidas;
-
 }

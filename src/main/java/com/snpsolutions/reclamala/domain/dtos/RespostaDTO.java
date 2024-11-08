@@ -9,13 +9,9 @@ import lombok.Setter;
 @Setter
 public class RespostaDTO {
 
-    @NotNull
-    private Long idComentario;
-
     @NotBlank
     private String conteudoResposta;
 
     @NotNull
     private Integer matriculaUsuario;
-
 }

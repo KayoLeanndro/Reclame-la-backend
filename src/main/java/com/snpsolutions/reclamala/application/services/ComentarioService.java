@@ -39,7 +39,6 @@ public class ComentarioService {
         dto.setConteudoComentario(comentario.getConteudoComentario());
         dto.setCategoriaComentario(comentario.getCategoriaComentario());
         dto.setMatriculaUsuario((comentario.getUsuarioComentario().getMatricula()));
-        dto.setQtdCurtidas(comentario.getQtdCurtidas());
         return dto;
     }
     

@@ -35,18 +35,18 @@ public class Resposta implements Serializable {
     @JoinColumn(name = "cmtr_id", nullable = false)
     private Comentario comentario;
 
-    @Column(name = "cntd_resposta")
+    @Column(name = "cntd_resposta", nullable = false)
     private String conteudoResposta;
 
-    @Column(name = "qtd_curtidas")
-    private Integer qtdCurtidas;
+    @Column(name = "qtd_curtidas", nullable = false)
+    private Integer qtdCurtidas = 0; 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usur_id", nullable = false)
-    private Usuario usuarioComentario;
+    private Usuario usuario; 
 
-    @Column(name = "data_criacao_comentario")
-    private LocalDateTime dataCriacaoComentario;
+    @Column(name = "data_criacao_resposta", nullable = false)
+    private LocalDateTime dataCriacaoResposta;
 
     @Override
     public int hashCode() {

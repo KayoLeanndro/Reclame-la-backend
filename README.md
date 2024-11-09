@@ -31,7 +31,7 @@ Este é um projeto de uma plataforma de feedbacks para alunos e instituições, 
 
 A aplicação é dividida em módulos para separar as responsabilidades:
 
-- **Configurações**: Arquivos e classes de configuração para integração com Twilio, Firebase e banco de dados.
+- **Configurações**: Arquivos e classes de configuração para integração com Twilio e banco de dados.
 - **Entidades**: Representações das entidades `Usuario`, `Comentario`, `Resposta`, etc.
 - **Serviços**: Camada de lógica de negócio.
 - **Controllers**: Pontos de entrada da API RESTful.

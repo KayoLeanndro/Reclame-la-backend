@@ -1,91 +1,77 @@
-# Reclamala
+# Reclama la - Plataforma de Feedbacks
 
-**Reclamala** é uma plataforma para gestão de comentários e respostas, permitindo que usuários registrem feedbacks e instituições possam responder a esses feedbacks. O projeto é construído com Spring Boot, JPA, e PostgreSQL.
-
----
+Este é um projeto de uma plataforma de feedbacks para alunos e instituições, construído utilizando Java e Spring Boot, com PostgreSQL como banco de dados e Firebase para armazenamento.
 
 ## Sumário
 
-- [Sobre o Projeto](#sobre-o-projeto)
-- [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Instalação](#instalação)
-- [Configuração](#configuração)
-- [Uso](#uso)
-- [API Endpoints](#api-endpoints)
-- [Contribuições](#contribuições)
-- [Licença](#licença)
+- [Tecnologias](#tecnologias)
+- [Configurações](#configurações)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Entidades Principais](#entidades-principais)
+- [Autenticação e Autorização](#autenticação-e-autorização)
+- [Docker e Deploy](#docker-e-deploy)
+- [Documentação](#documentação)
+- [Contribuição](#contribuição)
 
----
+## Tecnologias
 
-## Sobre o Projeto
+- **Linguagem**: Java
+- **Framework**: Spring Boot
+- **Banco de Dados**: PostgreSQL (com suporte a SQLite para persistência offline(Feature))
+- **Cloud**: Railway
 
-**Reclamala** permite que os usuários enviem comentários classificados por categorias (infraestrutura, ensino, suporte, entre outros). Cada comentário pode ser respondido por administradores e as respostas podem ser curtidas pelos usuários.
 
-### Funcionalidades:
-- **Cadastro de usuários** com diferentes tipos (Administrador, Desenvolvedor, Aluno).
-- **Cadastro de comentários** por usuários, com categorias específicas.
-- **Respostas aos comentários**, com possibilidade de curtir.
-- **Consulta e gerenciamento** dos comentários e respostas.
+## Configurações
 
----
+- Configuração das variáveis de ambiente no `.env` para gerenciamento seguro de credenciais.
+- Conexão com Amazon RDS usando PostgreSQL 16.3.
+- Implementação de Docker para deploy e controle de dependências.
 
-## Tecnologias Utilizadas
+## Estrutura do Projeto
 
-- **Java 17**
-- **Spring Boot** (para construção do backend)
-- **Spring Data JPA** (para acesso ao banco de dados)
-- **SpringDoc OpenAPI** (para documentação da API)
-- **PostgreSQL** (para persistência de dados)
+A aplicação é dividida em módulos para separar as responsabilidades:
 
----
+- **Configurações**: Arquivos e classes de configuração para integração com Twilio, Firebase e banco de dados.
+- **Entidades**: Representações das entidades `Usuario`, `Comentario`, `Resposta`, etc.
+- **Serviços**: Camada de lógica de negócio.
+- **Controllers**: Pontos de entrada da API RESTful.
 
-## Instalação
+## Entidades Principais
 
-1. **Clone o repositório**:
-   ```bash
-   git clone https://github.com/seu-usuario/reclamala.git
-   cd reclamala
-  
+### Usuario
+- **Atributos**: `matricula`, `usuarioCpf`, `username`, `password`, `tipoUsuario`
+- **Enums**: `UsuarioTipo` (com valores como `DESENVOLVEDOR`, `ADMINISTRADOR`, `ALUNO`)
 
- Configure o banco de dados:
-Instale o PostgreSQL no seu computador e crie um banco de dados.
-Defina a URL do banco de dados e as credenciais no arquivo .env.
-Instale as dependências:
+### Comentario
+- **Atributos**: `id`, `texto`, `categoriaComentario`
+- **Relacionamentos**: Um usuário pode ter vários comentários.
+- **Enum**: `ComentarioTipo` (com valores `INFRAESTRUTURA`, `ENSINO`, `SUPORTE`, `OUTRO`)
 
-```bash
-Copiar código
-mvn spring-boot:run
-```
+### Resposta
+- Entidade separada para responder aos comentários dos usuários.
 
-Configuração
-Crie um arquivo .env na raiz do projeto e adicione as variáveis de configuração necessárias, como:
+## Autenticação e Autorização
 
-env
-Copiar código
-DB_URL=jdbc:postgresql://localhost:5432/reclamala
-DB_USERNAME=seu_usuario
-DB_PASSWORD=sua_senha
-Uso
-Depois de executar o projeto, a aplicação estará disponível em http://localhost:8080.
+- Implementação de autenticação com criptografia de senha e integração com Firebase.
+- Metodologia de login com validação de usuário e permissões.
 
-2. **:API Endpoints**
-Acesse os endpoints da API através da URL base http://localhost:8080/api. Você pode consultar a documentação completa da API em http://localhost:8080/swagger-ui.html.
+## Docker e Deploy
 
-Comentários
-POST /api/comentarios - Cria um novo comentário.
-GET /api/comentarios - Lista todos os comentários.
-PUT /api/comentarios/{id} - Atualiza um comentário existente.
-DELETE /api/comentarios/{id} - Exclui um comentário.
-Respostas
-POST /api/respostas - Cria uma nova resposta.
-GET /api/respostas - Lista todas as respostas.
-POST /api/respostas/{id}/curtir - Adiciona uma curtida a uma resposta.
-Contribuições
-Sinta-se à vontade para contribuir com melhorias para o projeto! Para isso, basta seguir as etapas abaixo:
+- Configuração de Docker para contêinerizar a aplicação.
+- Deploy usando Railway, com variáveis de ambiente configuradas para PostgreSQL.
 
-Fork este repositório.
-Crie uma branch para a sua feature: git checkout -b minha-feature.
-Faça commit das suas alterações: git commit -am 'Adiciona nova feature'.
-Envie para o seu fork: git push origin minha-feature.
-Crie um Pull Request.
+## Documentação
 
+- Documentação gerada com **SpringDoc** para facilitar a navegação pelas rotas e funcionalidades da API.
+
+## Contribuição
+
+1. Faça um fork do projeto.
+2. Crie uma nova branch: `git checkout -b minha-nova-feature`
+3. Commit suas alterações: `git commit -m 'Adiciona nova feature'`
+4. Faça um push para a branch: `git push origin minha-nova-feature`
+5. Envie um Pull Request
+
+## Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).

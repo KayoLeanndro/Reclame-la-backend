@@ -1,6 +1,6 @@
 # Reclama la - Plataforma de Feedbacks
 
-Este é um projeto de uma plataforma de feedbacks para alunos e instituições, construído utilizando Java e Spring Boot, com PostgreSQL como banco de dados e Firebase para armazenamento.
+Este é um projeto de uma plataforma de feedbacks para alunos e instituições, construído utilizando Java e Spring Boot, com PostgreSQL como banco de dados
 
 ## Sumário
 

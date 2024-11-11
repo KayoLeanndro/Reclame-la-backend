@@ -9,7 +9,6 @@ Este é um projeto de uma plataforma de feedbacks para alunos e instituições, 
 - [Estrutura do Projeto](#estrutura-do-projeto)
 - [Entidades Principais](#entidades-principais)
 - [Autenticação e Autorização](#autenticação-e-autorização)
-- [Docker e Deploy](#docker-e-deploy)
 - [Documentação](#documentação)
 - [Contribuição](#contribuição)
 
@@ -54,11 +53,6 @@ A aplicação é dividida em módulos para separar as responsabilidades:
 
 - Implementação de autenticação com criptografia de senha e integração com Firebase.
 - Metodologia de login com validação de usuário e permissões.
-
-## Docker e Deploy
-
-- Configuração de Docker para contêinerizar a aplicação.
-- Deploy usando Railway, com variáveis de ambiente configuradas para PostgreSQL.
 
 ## Documentação
 

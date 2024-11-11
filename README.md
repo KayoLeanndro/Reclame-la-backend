@@ -24,7 +24,7 @@ Este é um projeto de uma plataforma de feedbacks para alunos e instituições, 
 ## Configurações
 
 - Configuração das variáveis de ambiente no `.env` para gerenciamento seguro de credenciais.
-- Conexão com Amazon RDS usando PostgreSQL 16.3.
+- Conexão com Railway usando PostgreSQL 16.3.
 - Implementação de Docker para deploy e controle de dependências.
 
 ## Estrutura do Projeto

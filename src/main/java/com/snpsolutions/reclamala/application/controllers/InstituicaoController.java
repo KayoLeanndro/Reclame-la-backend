@@ -47,7 +47,7 @@ public class InstituicaoController {
     public ResponseEntity<ApiResponse> loginInstituicao(@RequestBody LoginRequestInstituicaoDTO loginRequest) {
         try {
             Instituicao instituicao = instituicaoService.loginInstituicao(loginRequest.getCnpj(), loginRequest.getSenha());
-            ApiResponse response = new ApiResponse("Login bem-sucedido.", true, instituicao);
+            ApiResponse response = new ApiResponse("Login bem-sucedido.", true, loginRequest);
             return ResponseEntity.ok(response);
         } catch (EntityNotFoundException e) {
             ApiResponse response = new ApiResponse("Instituição não encontrada: " + e.getMessage(), false);

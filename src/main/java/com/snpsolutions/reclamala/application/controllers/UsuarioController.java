@@ -46,7 +46,7 @@ public class UsuarioController {
     public ResponseEntity<ApiResponse> loginUsuario(@RequestBody LoginRequestDTO loginRequest) {
         try {
             Usuario usuario = usuarioService.loginUsuario(loginRequest.getMatricula(), loginRequest.getSenha());
-            ApiResponse response = new ApiResponse("Login bem-sucedido.", true, usuario);
+            ApiResponse response = new ApiResponse("Login bem-sucedido.", true, loginRequest);
             return ResponseEntity.ok(response);
         } catch (EntityNotFoundException e) {
             ApiResponse response = new ApiResponse("Usuário não encontrado: " + e.getMessage(), false);

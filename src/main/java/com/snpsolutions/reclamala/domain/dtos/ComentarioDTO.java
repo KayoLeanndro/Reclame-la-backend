@@ -9,6 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ComentarioDTO {
+
+    @NotNull
+    private Long id;
    
     @NotBlank
     private String tituloComentario;
@@ -18,6 +21,8 @@ public class ComentarioDTO {
 
     @NotNull
     private ComentarioTipo categoriaComentario;
+
+    private int qtdCurtidas;
 
     @NotNull
     private Integer matriculaUsuario;

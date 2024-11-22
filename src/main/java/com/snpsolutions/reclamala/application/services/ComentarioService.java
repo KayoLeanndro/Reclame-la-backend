@@ -35,9 +35,11 @@ public class ComentarioService {
 
     private ComentarioDTO toComentarioDTO(Comentario comentario) {
         ComentarioDTO dto = new ComentarioDTO();
+        dto.setId(comentario.getId());
         dto.setTituloComentario(comentario.getTituloComentario());
         dto.setConteudoComentario(comentario.getConteudoComentario());
         dto.setCategoriaComentario(comentario.getCategoriaComentario());
+        dto.setQtdCurtidas(comentario.getQtdCurtidas());
         dto.setMatriculaUsuario((comentario.getUsuarioComentario().getMatricula()));
         return dto;
     }
